@@ -1,18 +1,19 @@
-package com.cornez.todotodayii;
+package com.marriedmen.autismapp;
 
-class ToDo_Item {
+public class profileObj {
 
     //MEMBER ATTRIBUTES
     private int _id;
-    private String description;
-    private int is_done;
+    private String name;
+    private String information;
 
-    public ToDo_Item() {
+
+    public profileObj() {
     }
 
-    public ToDo_Item(String desc, int done) {
-        description = desc;
-        is_done = done;
+    public profileObj(String _name, String _information) {
+        name = _name;
+        information = _information;
     }
 
     public int getId() {
@@ -22,20 +23,18 @@ class ToDo_Item {
         _id = id;
     }
 
-    public String getDescription () {
-        return description;
+    public String getName () {
+        return name;
     }
-    public void setDescription (String desc) {
-        description = desc;
-    }
-
-    public int getIs_done() {
-        return is_done;
+    public void setName (String _name) {
+        name = _name;
     }
 
-    public void setIs_done(int done) {
-        is_done = done;
+    public String getInfo () {
+        return information;
     }
-
+    public void setInfo (String _information) {
+        information = _information;
+    }
 
 }

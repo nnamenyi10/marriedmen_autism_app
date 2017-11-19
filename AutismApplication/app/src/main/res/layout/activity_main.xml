@@ -26,4 +26,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:onClick="startActivity_2"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="348dp" />
+
 </android.support.constraint.ConstraintLayout>
