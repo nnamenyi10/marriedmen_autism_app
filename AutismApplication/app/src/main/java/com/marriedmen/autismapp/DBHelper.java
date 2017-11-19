@@ -16,14 +16,17 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "profiles";
     private static final String DATABASE_TABLE = "profiles";
-
+    private static final String DATABASE_TABLE_BEHV = "behaviors";
+    private static final String DATABASE_TABLE_ACTIVITY = "behaviors";
 
     //TASK 2: DEFINE THE COLUMN NAMES FOR THE TABLE
     private static final String KEY_PROFILE_ID = "_id";
     private static final String KEY_NAME = "name";
     private static final String KEY_INFORMATION = "information";
+    private static final String KEY_BEHVS = "behaviors";
+    private static final String KEY_access = "access";
 
-    private int taskCount;
+    private static final String KEY_ACTIVITIES = "activities";
 
     public DBHelper(Context context){
         super (context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,18 +36,33 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String table = "CREATE TABLE " + DATABASE_TABLE + "("
+        String profileTable = "CREATE TABLE " + DATABASE_TABLE + "("
                 + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NAME + " TEXT, "
-                + KEY_INFORMATION + " Text" + ")";
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NAME + " NAME, "
+                + KEY_INFORMATION + " INFORMATION" + ")";
 
-        db.execSQL(table);
+        String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
+                + KEY_PROFILE_ID +
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activies, "
+                +  ")";
+
+        String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("
+                + KEY_PROFILE_ID +
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_BEHVS + " BEHVS, "
+                + KEY_access + " ACCESS" + ")";
+
+        db.execSQL(profileTable);
+        db.execSQL(activityTable);
+        db.execSQL(behaviorTable);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         // DROP OLDER TABLE IF EXISTS
         database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_BEHV);
+        database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ACTIVITY);
 
         // CREATE TABLE AGAIN
         onCreate(database);
@@ -71,7 +89,25 @@ public class DBHelper extends SQLiteOpenHelper {
         // CLOSE THE DATABASE CONNECTION
         db.close();
     }
+    public void addActivity(String activity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(KEY_ACTIVITIES, activity);
+        db.insert(DATABASE_TABLE_ACTIVITY, null, values);
+        db.close();
+    }
+    public void addBehavior(String behv) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_BEHVS, behv);
+        values.put(KEY_access, "all");
+        db.insert(DATABASE_TABLE_BEHV, null, values);
+        db.close();
+    }
+
+    //for testing, can be generalized
     public String getProfileName() {
 
         //GET ALL THE TASK ITEMS ON THE LIST

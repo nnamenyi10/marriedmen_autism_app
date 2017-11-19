@@ -15,12 +15,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mDBHelper = new DBHelper(this);
 
+        //for testing
+        profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
+        profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
+        mDBHelper.addProfileObj(fakeprofile);
+        mDBHelper.addProfileObj(fakeprofile2);
 
-        //TextView text = (TextView) findViewById(R.id.textView);
-        //text.setText("testing");
-        //profileObj fakeprofile = new profileObj("Jeffery Dahmer", "was a very bad man");
-        //profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
+        behvTableInit(mDBHelper);
+        activityTableInit(mDBHelper);
 
+    }
+
+    
+    public void activityTableInit(DBHelper db) {
+        db.addActivity("bedtime");
+        db.addActivity("dinner");
+    }
+
+    public void behvTableInit(DBHelper db) {
+        db.addBehavior("eating people");
+        db.addBehavior("murder");
+        db.addBehavior("drugging men");
+        db.addBehavior("necrophilia");
     }
 
     public void startActivity_2(View v) {

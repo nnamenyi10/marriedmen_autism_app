@@ -14,13 +14,9 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
         TextView text = (TextView) findViewById(R.id.textView);
+
+        //information added in MainActivity
         mDBHelper = new DBHelper(this);
-        SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        //for testing
-        profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
-        profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
-        mDBHelper.addProfileObj(fakeprofile);
-        mDBHelper.addProfileObj(fakeprofile2);
         text.setText( mDBHelper.getProfileName());
 
     }
