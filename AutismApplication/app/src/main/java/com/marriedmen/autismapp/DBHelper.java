@@ -1,4 +1,4 @@
-package com.cornez.todotodayii;
+package com.marriedmen.autismapp;
 
 
 import android.content.ContentValues;
@@ -8,24 +8,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     //TASK 1: DEFINE THE DATABASE AND TABLE
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "toDo_Today";
-    private static final String DATABASE_TABLE = "toDo_Items";
+    private static final String DATABASE_NAME = "profiles";
+    private static final String DATABASE_TABLE = "profiles";
 
 
     //TASK 2: DEFINE THE COLUMN NAMES FOR THE TABLE
-    private static final String KEY_TASK_ID = "_id";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_IS_DONE = "is_done";
+    private static final String KEY_PROFILE_ID = "_id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_INFORMATION = "information";
 
     private int taskCount;
 
-    public DBHelper (Context context){
+    public DBHelper(Context context){
         super (context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -34,9 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String table = "CREATE TABLE " + DATABASE_TABLE + "("
-                + KEY_TASK_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_DESCRIPTION + " TEXT, "
-                + KEY_IS_DONE + " INTEGER" + ")";
+                + KEY_PROFILE_ID +
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NAME + " TEXT, "
+                + KEY_INFORMATION + " Text" + ")";
 
         db.execSQL(table);
     }
@@ -52,37 +52,41 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //********** DATABASE OPERATIONS:  ADD, EDIT, DELETE
-    // Adding new task
-    public void addToDoItem(ToDo_Item task) {
+    // Adding new profile
+    public void addProfileObj(profileObj profile) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         //ADD KEY-VALUE PAIR INFORMATION FOR THE TASK DESCRIPTION
-        values.put(KEY_DESCRIPTION, task.getDescription()); // task name
+        values.put(KEY_NAME, profile.getName()); // task name
 
         //ADD KEY-VALUE PAIR INFORMATION FOR
         //IS_DONE VALUE: 0- NOT DONE, 1 - IS DONE
-        values.put(KEY_IS_DONE, task.getIs_done());
+        values.put(KEY_INFORMATION, profile.getInfo());
 
         // INSERT THE ROW IN THE TABLE
         db.insert(DATABASE_TABLE, null, values);
-        taskCount++;
+        //taskCount++;
 
         // CLOSE THE DATABASE CONNECTION
         db.close();
     }
 
-    public List<ToDo_Item> getAllTasks() {
+    public String getProfileName() {
 
         //GET ALL THE TASK ITEMS ON THE LIST
-        List<ToDo_Item> todoList = new ArrayList<ToDo_Item>();
+        //List<profileObj> profileList = new ArrayList<ToDo_Item>();
 
         //SELECT ALL QUERY FROM THE TABLE
-        String selectQuery = "SELECT  * FROM " + DATABASE_TABLE;
+        String selectQuery = "SELECT  name FROM " + DATABASE_TABLE;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        cursor.moveToFirst();
+        String name = cursor.getString(0);
+        return name;
+    }
+/*
         // LOOP THROUGH THE TODO TASKS
         if (cursor.moveToFirst()) {
             do {
@@ -127,5 +131,5 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update(DATABASE_TABLE, values, KEY_TASK_ID + " = ?", new String[]{String.valueOf(task.getId())});
         db.close();
     }
-
+*/
 }
