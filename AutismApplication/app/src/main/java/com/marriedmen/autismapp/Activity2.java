@@ -17,7 +17,11 @@ public class Activity2 extends AppCompatActivity {
 
         //information added in MainActivity
         mDBHelper = new DBHelper(this);
-        text.setText( mDBHelper.getProfileName());
+        //test
+        text.setText( mDBHelper.testingquery());
+    }
+
+    public void makeProfile(String name, String info){
 
     }
 }

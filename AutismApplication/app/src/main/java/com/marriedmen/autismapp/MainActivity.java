@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    
+
     public void activityTableInit(DBHelper db) {
         db.addActivity("bedtime");
         db.addActivity("dinner");

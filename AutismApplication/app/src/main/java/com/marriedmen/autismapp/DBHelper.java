@@ -108,19 +108,21 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //for testing, can be generalized
-    public String getProfileName() {
+    public String testingquery() {
 
         //GET ALL THE TASK ITEMS ON THE LIST
         //List<profileObj> profileList = new ArrayList<ToDo_Item>();
 
         //SELECT ALL QUERY FROM THE TABLE
-        String selectQuery = "SELECT  name FROM " + DATABASE_TABLE;
+        String selectQuery = "SELECT _id FROM " + DATABASE_TABLE;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
         String name = cursor.getString(0);
-        return name;
+        cursor.moveToNext();
+        String name2 = cursor.getString(0);
+        return name2 + " killed " + name;
     }
 /*
         // LOOP THROUGH THE TODO TASKS

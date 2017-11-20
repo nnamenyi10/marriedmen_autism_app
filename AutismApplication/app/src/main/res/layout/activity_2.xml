@@ -18,5 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="add profile name" />
+
+        <EditText
+            android:id="@+id/editTextInformation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="add profile information"/>
+
+        <Button
+            android:id="@+id/button"
+            android:onClick="makeProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make Prolfile" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
