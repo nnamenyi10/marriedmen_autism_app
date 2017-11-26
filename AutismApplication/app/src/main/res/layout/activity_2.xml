@@ -36,7 +36,13 @@
             android:onClick="makeProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Make Prolfile" />
+            android:text="Make Profile" />
+        <Button
+            android:id="@+id/backbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:onClick="goBack"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
