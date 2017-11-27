@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
                 + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activities, "
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activities"
                 +  ")";
 
         String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("

@@ -14,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDBHelper = new DBHelper(this);
+        behvTableInit(mDBHelper);
+        activityTableInit(mDBHelper);
+
 
         //for testing
         profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
@@ -21,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
 
-        behvTableInit(mDBHelper);
-        activityTableInit(mDBHelper);
+
 
     }
 
