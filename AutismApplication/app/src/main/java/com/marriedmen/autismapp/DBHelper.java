@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
                 + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activities, "
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activities"
                 +  ")";
 
         String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("
@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + KEY_END_TIME + " End Time, "
                 + KEY_PROFILE_ID + " Parent id, "
                 + KEY_ACTIVITY_ID + " activity id, "
-                + KEY_BEHV_COUNTER + " behaviors, "+ ")";
+                + KEY_BEHV_COUNTER + " behaviors"+ ")";
 
         db.execSQL(profileTable);
         db.execSQL(activityTable);
