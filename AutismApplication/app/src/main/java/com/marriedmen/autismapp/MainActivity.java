@@ -17,14 +17,11 @@ public class MainActivity extends AppCompatActivity {
         behvTableInit(mDBHelper);
         activityTableInit(mDBHelper);
 
-
         //for testing
         profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
         profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
-
-
 
     }
 

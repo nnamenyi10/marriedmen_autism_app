@@ -17,7 +17,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "profiles";
     private static final String DATABASE_TABLE = "profiles";
     private static final String DATABASE_TABLE_BEHV = "behaviors";
-    private static final String DATABASE_TABLE_ACTIVITY = "behaviors";
+    private static final String DATABASE_TABLE_ACTIVITY = "activity";
+    private static final String DATABASE_TABLE_LOGS = "logs";
 
     //TASK 2: DEFINE THE COLUMN NAMES FOR THE TABLE
     private static final String KEY_PROFILE_ID = "_id";
@@ -25,6 +26,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_INFORMATION = "information";
     private static final String KEY_BEHVS = "behaviors";
     private static final String KEY_access = "access";
+    //log table
+    private static final String KEY_LOG_ID = "_logId";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_START_TIME = "startTime";
+    private static final String KEY_END_TIME = "endTime";
+    private static final String KEY_ACTIVITY_ID = "_logId2";
+    private static final String KEY_BEHV_COUNTER = "behvCounter";
+
 
     private static final String KEY_ACTIVITIES = "activities";
 
@@ -51,9 +60,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_BEHVS + " BEHAVIORS, "
                 + KEY_access + " ACCESS" + ")";
 
+        String logTable = "CREATE TABLE " + DATABASE_TABLE_LOGS + "("
+                + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_PROFILE_ID + " Parent id, "
+                + KEY_DATE + " Date"
+                + KEY_START_TIME + " Start Time, "
+                + KEY_END_TIME + " End Time, "
+               // + KEY_PROFILE_ID + " Parent id, " I commented this out, we have KEY_PROFILE_ID
+                        //showing up twice, do we need this?
+                + KEY_ACTIVITY_ID + " activity id, "
+                + KEY_BEHV_COUNTER + " behaviors"+ ")";
+
         db.execSQL(profileTable);
         db.execSQL(activityTable);
         db.execSQL(behaviorTable);
+        db.execSQL(logTable);
+
 
     }
 
@@ -63,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_BEHV);
         database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ACTIVITY);
+        database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_LOGS);
 
         // CREATE TABLE AGAIN
         onCreate(database);
