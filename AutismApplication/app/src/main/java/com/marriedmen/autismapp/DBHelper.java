@@ -31,7 +31,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_DATE = "date";
     private static final String KEY_START_TIME = "startTime";
     private static final String KEY_END_TIME = "endTime";
-    private static final String KEY_ACTIVITY_ID = "_logId2";
+
+    private static final String KEY_ACTIVITY_ID2 = "_logId2"; // ?? do we need this?
+
+    private static final String KEY_ACTIVITY_ID = "_logId";
     private static final String KEY_BEHV_COUNTER = "behvCounter";
 
 
@@ -66,8 +69,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 + KEY_DATE + " Date"
                 + KEY_START_TIME + " Start Time, "
                 + KEY_END_TIME + " End Time, "
+
                // + KEY_PROFILE_ID + " Parent id, " I commented this out, we have KEY_PROFILE_ID
                         //showing up twice, do we need this?
+
+                + KEY_PROFILE_ID + " Parent id, "
+
                 + KEY_ACTIVITY_ID + " activity id, "
                 + KEY_BEHV_COUNTER + " behaviors"+ ")";
 

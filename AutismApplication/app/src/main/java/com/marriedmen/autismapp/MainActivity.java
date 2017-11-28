@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
-
     }
 
 
