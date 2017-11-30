@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 public class Activity2 extends AppCompatActivity {
     protected DBHelper mDBHelper;
-    EditText name;
-    EditText info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +20,8 @@ public class Activity2 extends AppCompatActivity {
         //information added in MainActivity
         mDBHelper = new DBHelper(this);
         //test
-        text.setText( mDBHelper.testingquery());
+        //text.setText( mDBHelper.testingquery());
+        text.setText("Must input a profile name, all other fields may be blank");
     }
 
 
@@ -37,6 +36,7 @@ public class Activity2 extends AppCompatActivity {
 
             //do nothing, profile needs a name
             //should also check to make sure there are no duplicate names?
+
 
         }
         else {

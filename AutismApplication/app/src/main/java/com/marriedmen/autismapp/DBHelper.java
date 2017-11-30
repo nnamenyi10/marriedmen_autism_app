@@ -129,6 +129,34 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public void addLogTest() {
+        /* for ref only!!!
+        + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_PROFILE_ID3 + " Parent id, "
+                + KEY_DATE + " Date"
+                + KEY_START_TIME + " Start Time, "
+                + KEY_END_TIME + " End Time, "
+                // Steven doesn't remember what activity id is for in logtable
+                + KEY_ACTIVITY_ID2 + " activity id, "
+
+                + KEY_BEHV_COUNTER + " behaviors"+ ")";
+
+        */
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_PROFILE_ID2, 2);
+        values.put(KEY_DATE, "null");
+        values.put(KEY_START_TIME, "null");
+        values.put(KEY_END_TIME, "null");
+        values.put(KEY_ACTIVITY_ID2, "null");
+        values.put(KEY_BEHV_COUNTER, "null");
+
+        db.insert(DATABASE_TABLE_LOGS, null,values);
+        db.close();
+    }
+
     public void addBehavior(String behv) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -146,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //List<profileObj> profileList = new ArrayList<ToDo_Item>();
 
         //SELECT ALL QUERY FROM THE TABLE
-        String selectQuery = "SELECT _id FROM " + DATABASE_TABLE;
+        String selectQuery = "SELECT " + KEY_PROFILE_ID + " FROM " + DATABASE_TABLE;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

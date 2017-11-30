@@ -31,7 +31,7 @@
         android:id="@+id/buttonStart"
         android:layout_width="375dp"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="Make Profile"
         android:onClick="startActivity_2"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="348dp" />
