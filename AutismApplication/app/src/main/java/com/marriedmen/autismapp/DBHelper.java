@@ -14,7 +14,8 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
     //TASK 1: DEFINE THE DATABASE AND TABLE
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "profiles";
+    private static final String DATABASE_NAME = "clients";
+
     private static final String DATABASE_TABLE = "profiles";
     private static final String DATABASE_TABLE_BEHV = "behaviors";
     private static final String DATABASE_TABLE_ACTIVITY = "activity";
@@ -22,21 +23,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //TASK 2: DEFINE THE COLUMN NAMES FOR THE TABLE
     private static final String KEY_PROFILE_ID = "_id";
+    private static final String KEY_PROFILE_ID2 = "_id2";
+    private static final String KEY_PROFILE_ID3 = "_id3";
+
     private static final String KEY_NAME = "name";
     private static final String KEY_INFORMATION = "information";
     private static final String KEY_BEHVS = "behaviors";
-    private static final String KEY_access = "access";
+    private static final String KEY_ACCESS = "access";
     //log table
     private static final String KEY_LOG_ID = "_logId";
     private static final String KEY_DATE = "date";
     private static final String KEY_START_TIME = "startTime";
     private static final String KEY_END_TIME = "endTime";
 
-    private static final String KEY_ACTIVITY_ID2 = "_logId2"; // ?? do we need this?
+    private static final String KEY_ACTIVITY_ID = "_logId"; // ?? do we need this?
+    private static final String KEY_ACTIVITY_ID2 = "_logId2";
 
-    private static final String KEY_ACTIVITY_ID = "_logId";
     private static final String KEY_BEHV_COUNTER = "behvCounter";
-
 
     private static final String KEY_ACTIVITIES = "activities";
 
@@ -49,37 +52,35 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String profileTable = "CREATE TABLE " + DATABASE_TABLE + "("
-                + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NAME + " NAME, "
+                + KEY_PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_NAME + " NAME, "
                 + KEY_INFORMATION + " INFORMATION" + ")";
 
         String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
-                + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ACTIVITIES + " activities"
+                + KEY_ACTIVITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_ACTIVITIES + " activities"
                 +  ")";
 
         String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("
-                + KEY_PROFILE_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_BEHVS + " BEHAVIORS, "
-                + KEY_access + " ACCESS" + ")";
+                + KEY_PROFILE_ID2 +
+                " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BEHVS + " BEHAVIORS, "
+                + KEY_ACCESS + " ACCESS" + ")";
 
         String logTable = "CREATE TABLE " + DATABASE_TABLE_LOGS + "("
                 + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_PROFILE_ID + " Parent id, "
+                + KEY_PROFILE_ID3 + " Parent id, "
                 + KEY_DATE + " Date"
                 + KEY_START_TIME + " Start Time, "
                 + KEY_END_TIME + " End Time, "
+                // Steven doesn't remember what activity id is for in logtable
+                + KEY_ACTIVITY_ID2 + " activity id, "
 
-               // + KEY_PROFILE_ID + " Parent id, " I commented this out, we have KEY_PROFILE_ID
-                        //showing up twice, do we need this?
-
-                + KEY_PROFILE_ID + " Parent id, "
-
-                + KEY_ACTIVITY_ID + " activity id, "
                 + KEY_BEHV_COUNTER + " behaviors"+ ")";
 
         db.execSQL(profileTable);
         db.execSQL(activityTable);
+
         db.execSQL(behaviorTable);
         db.execSQL(logTable);
 
@@ -132,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(KEY_BEHVS, behv);
-        values.put(KEY_access, "all");
+        values.put(KEY_ACCESS, "all");
         db.insert(DATABASE_TABLE_BEHV, null, values);
         db.close();
     }
