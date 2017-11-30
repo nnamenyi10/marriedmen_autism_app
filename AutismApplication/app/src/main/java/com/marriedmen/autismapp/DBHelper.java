@@ -128,6 +128,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(DATABASE_TABLE_ACTIVITY, null, values);
         db.close();
     }
+
     public void addBehavior(String behv) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

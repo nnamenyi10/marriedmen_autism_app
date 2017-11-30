@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Activity2 extends AppCompatActivity {
     protected DBHelper mDBHelper;
+    EditText name;
+    EditText info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +26,24 @@ public class Activity2 extends AppCompatActivity {
     }
 
 
-    public void makeProfile(String name, String info){
+    public void makeProfile(View view){
+        EditText nameET = (EditText)findViewById(R.id.editTextName);
+        EditText info = (EditText)findViewById(R.id.editTextInformation);
+        String name = nameET.getText().toString();
 
+        if (name.matches("")) {
 
+            Toast.makeText(this, "You did not enter a username", Toast.LENGTH_SHORT).show();
+
+            //do nothing, profile needs a name
+            //should also check to make sure there are no duplicate names?
+
+        }
+        else {
+            profileObj profile = new profileObj(name, info.toString());
+            mDBHelper.addProfileObj(profile);
+            finish();
+        }
     }
 
     public void goBack(View view){
