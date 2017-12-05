@@ -208,10 +208,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return namelist;*/
         SQLiteDatabase db = getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
-        db.close();
+        //db.close();
         Log.d("test", "getProfiles: " + count);
-        String[] test = new String[] {"test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"};
-        return test;
+        String[] profiles = new String[(int)count];
+        Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE, null);
+        mCursor.moveToFirst();
+        for (int i = 0; i < count; i++)
+        {
+            if (mCursor.isAfterLast() || mCursor == null){ break; }
+            String name = mCursor.getString(mCursor.getColumnIndex(KEY_NAME));
+            profiles[i] = name;
+            mCursor.moveToNext();
+        }
+
+        //String[] test = new String[] {"test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"};
+        //return test;
+        return profiles;
     }
 
     //for testing, can be generalized
