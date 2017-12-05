@@ -17,7 +17,6 @@ public class ProfilesFragment extends ListFragment
 {
     OnProfileSelectedListener mCallback;
 
-    DBHelper mDBHelper;
 
     public interface OnProfileSelectedListener
     {
@@ -37,6 +36,7 @@ public class ProfilesFragment extends ListFragment
         // test array
         String[] test = new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         setListAdapter(new ArrayAdapter<>(getActivity(), layout, test));
+
 
     }
 
