@@ -182,6 +182,28 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public String[] getProfiles() {
+        //get length of profiles databases
+        String[] namelist = new String[4];
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT " + KEY_NAME + " FROM " + DATABASE_TABLE;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        //String str = cursor.getString(0);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String str = cursor.getString(0);
+                namelist[count] = str;
+                count++;
+            } while (cursor.moveToNext());
+            count = 0;
+        }
+
+        return namelist;
+    }
+
     //for testing, can be generalized
     public String testingquery() {
         SQLiteDatabase db = this.getReadableDatabase();

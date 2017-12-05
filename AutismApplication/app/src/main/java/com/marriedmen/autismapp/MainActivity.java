@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         //for testing
         mDBHelper.addLogTest(fakeprofile);
+
+
     }
 
     public void activityTableInit(DBHelper db) {
