@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements ProfilesFragment.OnProfileSelectedListener {
     protected DBHelper mDBHelper;
 
 
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         db.addBehavior("murder");
         db.addBehavior("drugging men");
         db.addBehavior("necrophilia");
+    }
+
+    public void onProfileSelected(int position)
+    {
+        //Intent intent = new intent(this, TimerActivity.class);
+        return;
     }
 
     public void startActivity_2(View v) {

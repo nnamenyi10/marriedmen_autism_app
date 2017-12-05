@@ -41,11 +41,11 @@ public class ProfilesFragment extends ListFragment
         //SQLiteDatabase db = this.getReadableDatabase();
 
         DBHelper db = new DBHelper(getActivity());
-        String[] test = db.getProfiles();
+        String[] profiles = db.getProfiles();
         //Log.d(TAG, "onCreate: " + profiles);
         // test array
         //String[] test = new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-        setListAdapter(new ArrayAdapter<>(getActivity(), layout, test));
+        setListAdapter(new ArrayAdapter<>(getActivity(), layout, profiles));
 
 
     }
@@ -57,6 +57,7 @@ public class ProfilesFragment extends ListFragment
         if (getFragmentManager().findFragmentById(R.id.profiles_fragment) != null)
         {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            mCallback = (OnProfileSelectedListener)getActivity();
         }
     }
 
@@ -80,7 +81,6 @@ public class ProfilesFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         mCallback.onProfileSelected(position);
-
         getListView().setItemChecked(position, true);
     }
 }
