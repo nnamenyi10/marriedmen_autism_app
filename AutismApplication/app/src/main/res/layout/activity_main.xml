@@ -7,6 +7,33 @@
     tools:context="com.marriedmen.autismapp.MainActivity">
 
     <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:onClick="startActivity_2"
+        android:text="Make Profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/profiles_fragment"
+        android:name="com.marriedmen.autismapp.ProfilesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+
+    <Button
         android:id="@+id/button2"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -27,13 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/buttonStart"
-        android:layout_width="375dp"
-        android:layout_height="wrap_content"
-        android:text="Make Profile"
-        android:onClick="startActivity_2"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="348dp" />
+
 
 </android.support.constraint.ConstraintLayout>
