@@ -4,14 +4,18 @@ package com.marriedmen.autismapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class DBHelper extends SQLiteOpenHelper {
     //TASK 1: DEFINE THE DATABASE AND TABLE
@@ -184,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public String[] getProfiles() {
         //get length of profiles databases
-        String[] namelist = new String[4];
+        /*String[] namelist = new String[10];
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + KEY_NAME + " FROM " + DATABASE_TABLE;
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -201,7 +205,13 @@ public class DBHelper extends SQLiteOpenHelper {
             count = 0;
         }
 
-        return namelist;
+        return namelist;*/
+        SQLiteDatabase db = getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
+        db.close();
+        Log.d("test", "getProfiles: " + count);
+        String[] test = new String[] {"test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"};
+        return test;
     }
 
     //for testing, can be generalized

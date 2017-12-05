@@ -5,9 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ListFragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Jason on 12/3/2017.
@@ -38,8 +41,10 @@ public class ProfilesFragment extends ListFragment
         //SQLiteDatabase db = this.getReadableDatabase();
 
         DBHelper db = new DBHelper(getActivity());
+        String[] test = db.getProfiles();
+        //Log.d(TAG, "onCreate: " + profiles);
         // test array
-        String[] test = new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        //String[] test = new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         setListAdapter(new ArrayAdapter<>(getActivity(), layout, test));
 
 
