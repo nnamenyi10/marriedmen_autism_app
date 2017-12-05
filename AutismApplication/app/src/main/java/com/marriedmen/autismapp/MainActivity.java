@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
 
-        mDBHelper.addLogTest();
+        //for testing
+        mDBHelper.addLogTest(fakeprofile);
     }
 
     public void activityTableInit(DBHelper db) {

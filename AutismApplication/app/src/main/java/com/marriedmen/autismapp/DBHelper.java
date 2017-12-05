@@ -7,7 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_INFORMATION = "information";
     private static final String KEY_BEHVS = "behaviors";
-    private static final String KEY_ACCESS = "access";
+    private static final String KEY_BEHV_ID = "behv_id";
     //log table
     private static final String KEY_LOG_ID = "_logId";
     private static final String KEY_DATE = "date";
@@ -53,37 +55,46 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String profileTable = "CREATE TABLE " + DATABASE_TABLE + "("
                 + KEY_PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_NAME + " NAME, "
-                + KEY_INFORMATION + " INFORMATION" + ")";
+                + KEY_NAME + " TEXT NOT NULL, "
+                + KEY_INFORMATION + " TEXT" + ")";
 
         String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
                 + KEY_ACTIVITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_ACTIVITIES + " activities"
+                + KEY_ACTIVITIES + " TEXT NOT NULL"
                 +  ")";
 
         String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("
-                + KEY_PROFILE_ID2 +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_BEHVS + " BEHAVIORS, "
-                + KEY_ACCESS + " ACCESS" + ")";
+                + KEY_BEHV_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BEHVS + " TEXT NOT NULL"
+                + ")";
 
         String logTable = "CREATE TABLE " + DATABASE_TABLE_LOGS + "("
                 + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_PROFILE_ID3 + " Parent id, "
-                + KEY_DATE + " Date"
-                + KEY_START_TIME + " Start Time, "
-                + KEY_END_TIME + " End Time, "
-                // Steven doesn't remember what activity id is for in logtable
-                + KEY_ACTIVITY_ID2 + " activity id, "
+                // the way to do this parent/child thing is with a foreign key
+                + KEY_PROFILE_ID3 + " INTEGER NOT NULL, "
+                //+ " FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") INTEGER REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+"), "
+                + KEY_DATE + " TEXT, "
+                //+ KEY_START_TIME + " TEXT, "
+                + KEY_END_TIME + " TEXT, "
+                // this is the id from the activity table, so we know what activity is being done.
+                + KEY_ACTIVITY_ID2 + " INTEGER, "
+                // options, sql way is to have
+                //an string "1,2,3" with , as parser, will have to convert string 1 to int in analytics
+                + KEY_BEHV_COUNTER + " TEXT"+ ")"
+                + " FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") INTEGER REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+")";
 
-                + KEY_BEHV_COUNTER + " behaviors"+ ")";
+        //this is block only for debugging should be deleted later
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_BEHV);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ACTIVITY);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_LOGS);
+        //end block
 
         db.execSQL(profileTable);
         db.execSQL(activityTable);
 
         db.execSQL(behaviorTable);
         db.execSQL(logTable);
-
 
     }
 
@@ -120,6 +131,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // CLOSE THE DATABASE CONNECTION
         db.close();
     }
+
     public void addActivity(String activity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -130,30 +142,33 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addLogTest() {
-        /* for ref only!!!
-        + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_PROFILE_ID3 + " Parent id, "
-                + KEY_DATE + " Date"
-                + KEY_START_TIME + " Start Time, "
-                + KEY_END_TIME + " End Time, "
-                // Steven doesn't remember what activity id is for in logtable
-                + KEY_ACTIVITY_ID2 + " activity id, "
+    public void addLogTest(profileObj profile) {
 
-                + KEY_BEHV_COUNTER + " behaviors"+ ")";
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = date.format(cal.getTime());
+        String formattedTime = time.format(cal.getTime());
 
-        */
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_PROFILE_ID2, 2);
-        values.put(KEY_DATE, "null");
-        values.put(KEY_START_TIME, "null");
-        values.put(KEY_END_TIME, "null");
-        values.put(KEY_ACTIVITY_ID2, "null");
-        values.put(KEY_BEHV_COUNTER, "null");
 
-        db.insert(DATABASE_TABLE_LOGS, null,values);
+        values.put(KEY_PROFILE_ID3, 0);
+        values.put(KEY_DATE, formattedDate);
+
+        //values.put(KEY_START_TIME, formattedTime);
+
+        //same start and end if fine for now
+        values.put(KEY_END_TIME, formattedTime);
+        //this is saying the activity taking place has id 1, in this case its dinner (see init in mainactivity)
+        values.put(KEY_ACTIVITY_ID2, 1);
+        //just adding a string for now
+        //this is saying first behv happened once, second twice, ect... There are 4 total behvs currently
+        values.put(KEY_BEHV_COUNTER, "1,2,0,0");
+
+        db.insert(DATABASE_TABLE_LOGS, null, values);
         db.close();
     }
 
@@ -162,27 +177,45 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(KEY_BEHVS, behv);
-        values.put(KEY_ACCESS, "all");
+
         db.insert(DATABASE_TABLE_BEHV, null, values);
         db.close();
     }
 
     //for testing, can be generalized
     public String testingquery() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //doesn't work
+        String test_query = "SELECT * FROM " +DATABASE_TABLE+  " INNER JOIN " +DATABASE_TABLE_LOGS+ " ON "
+                + DATABASE_TABLE_LOGS+ "." +KEY_PROFILE_ID3+ " = " +DATABASE_TABLE+ "." + KEY_PROFILE_ID;
+
+        /*
+        String MY_QUERY =
+                "SELECT * FROM table_a a INNER JOIN table_b b ON a.id=b.other_id WHERE b.property_id=?";
+
+        db.rawQuery(MY_QUERY, new String[]{String.valueOf(propertyId)});
+        */
 
         //GET ALL THE TASK ITEMS ON THE LIST
         //List<profileObj> profileList = new ArrayList<ToDo_Item>();
 
         //SELECT ALL QUERY FROM THE TABLE
-        String selectQuery = "SELECT " + KEY_PROFILE_ID + " FROM " + DATABASE_TABLE;
+        String selectQuery = "SELECT " + KEY_BEHVS + " FROM " + DATABASE_TABLE_BEHV;
 
-        SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        //Cursor cursor = db.rawQuery(test_query, null);
+
         cursor.moveToFirst();
-        String name = cursor.getString(0);
-        cursor.moveToNext();
-        String name2 = cursor.getString(0);
-        return name2 + " killed " + name;
+
+        String str = cursor.getString(0);
+
+        //cursor.moveToNext();
+        //String name2 = cursor.getString(0);
+        return str;
     }
 /*
         // LOOP THROUGH THE TODO TASKS

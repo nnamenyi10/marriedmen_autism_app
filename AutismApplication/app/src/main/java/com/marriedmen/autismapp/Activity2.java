@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Activity2 extends AppCompatActivity {
     protected DBHelper mDBHelper;
 
@@ -19,9 +22,19 @@ public class Activity2 extends AppCompatActivity {
 
         //information added in MainActivity
         mDBHelper = new DBHelper(this);
-        //test
-        //text.setText( mDBHelper.testingquery());
-        text.setText("Must input a profile name, all other fields may be blank");
+
+        text.setText( mDBHelper.testingquery());
+        /*
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = date.format(cal.getTime());
+        String formattedTime = time.format(cal.getTime());
+        text.setText(formattedDate + "   " + formattedTime);
+        */
+
+        //text.setText("Must input a profile name, all other fields may be blank");
+
     }
 
 
@@ -36,8 +49,6 @@ public class Activity2 extends AppCompatActivity {
 
             //do nothing, profile needs a name
             //should also check to make sure there are no duplicate names?
-
-
         }
         else {
             profileObj profile = new profileObj(name, info.toString());
