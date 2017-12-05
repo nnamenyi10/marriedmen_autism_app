@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity
 
     public void onProfileSelected(int position)
     {
-        //Intent intent = new intent(this, TimerActivity.class);
-        return;
+        Intent intent = new Intent(this, TimerActivity.class);
+        startActivity(intent);
     }
 
     public void startActivity_2(View v) {
