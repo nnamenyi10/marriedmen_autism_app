@@ -19,6 +19,7 @@ import static android.content.ContentValues.TAG;
 
 public class DBHelper extends SQLiteOpenHelper {
     //TASK 1: DEFINE THE DATABASE AND TABLE
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "clients";
 
