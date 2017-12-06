@@ -16,5 +16,9 @@
         android:fragment="com.marriedmen.autismapp.SettingsActivity$DataFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/header_data" />
+    <header
+        android:fragment="com.marriedmen.autismapp.SettingsActivity$DebugFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="Debug options" />
 
 </preference-headers>
