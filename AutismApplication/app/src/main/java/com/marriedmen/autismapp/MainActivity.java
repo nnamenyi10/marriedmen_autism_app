@@ -71,6 +71,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onStart();
         Fragment frag = getFragmentManager().findFragmentById(R.id.profiles_fragment);
-        
+
     }
 }

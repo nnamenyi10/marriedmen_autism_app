@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutismApplication.iml" filepath="$PROJECT_DIR$/AutismApplication.iml" />
-      <module fileurl="file://C:\Users\Ramsdells\Desktop\cs443\cs443\marriedmen_autism_app\AutismApplication\AutismApplication.iml" filepath="C:\Users\Ramsdells\Desktop\cs443\cs443\marriedmen_autism_app\AutismApplication\AutismApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Ramsdells\Desktop\cs443\cs443\marriedmen_autism_app\AutismApplication\app\app.iml" filepath="C:\Users\Ramsdells\Desktop\cs443\cs443\marriedmen_autism_app\AutismApplication\app\app.iml" />
     </modules>
   </component>
 </project>
