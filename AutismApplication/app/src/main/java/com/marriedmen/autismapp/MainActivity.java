@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity
         db.addActivity("dinner");
     }
 
+    public void debugClearAll(View v) {
+        DBHelper db = new DBHelper(this);
+        db.clearAll();
+    }
+
     public void behvTableInit(DBHelper db) {
         db.addBehavior("eating people");
         db.addBehavior("murder");
