@@ -61,5 +61,9 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
 
     }
-
+    
+    public void startGraphActivity(View v) {
+        Intent intent = new Intent(MainActivity.this, GraphView.class);
+        startActivity(intent);
+    }
 }

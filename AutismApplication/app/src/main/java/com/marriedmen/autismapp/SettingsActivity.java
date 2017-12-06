@@ -1,5 +1,6 @@
 package com.marriedmen.autismapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -102,7 +103,7 @@ public class SettingsActivity extends PreferenceHelper {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
+        //when you hit back arrow call finish
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
