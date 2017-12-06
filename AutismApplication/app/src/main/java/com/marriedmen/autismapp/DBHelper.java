@@ -84,13 +84,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 + KEY_ACTIVITY_ID2 + " INTEGER, "
                 // options, sql way is to have
                 //an string "1,2,3" with , as parser, will have to convert string 1 to int in analytics
-<<<<<<< HEAD
                 + KEY_BEHV_COUNTER + " TEXT, "
                 + "FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+"))";
-=======
-                + KEY_BEHV_COUNTER + " TEXT"+ ")"
-                + " FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") INTEGER REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID +")";
->>>>>>> 24029882035940825cf93153e6cb1487e2c79e93
+
 
         //this is block only for debugging should be deleted later
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
