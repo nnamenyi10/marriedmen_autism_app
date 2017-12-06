@@ -61,16 +61,20 @@ public class DBHelper extends SQLiteOpenHelper {
         String profileTable = "CREATE TABLE " + DATABASE_TABLE + "("
                 + KEY_PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_NAME + " TEXT NOT NULL, "
-                + KEY_INFORMATION + " TEXT" + ")";
+                + KEY_INFORMATION + " TEXT"
+                + ", UNIQUE ("+ KEY_NAME +")"
+                + ")";
 
         String activityTable = "CREATE TABLE " + DATABASE_TABLE_ACTIVITY + "("
                 + KEY_ACTIVITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_ACTIVITIES + " TEXT NOT NULL"
+                + ", UNIQUE ("+ KEY_ACTIVITIES +")"
                 +  ")";
 
         String behaviorTable = "CREATE TABLE " + DATABASE_TABLE_BEHV + "("
                 + KEY_BEHV_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_BEHVS + " TEXT NOT NULL"
+                + ", UNIQUE ("+ KEY_BEHVS +")"
                 + ")";
 
         String logTable = "CREATE TABLE " + DATABASE_TABLE_LOGS + "("
@@ -177,6 +181,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(DATABASE_TABLE_LOGS, null, values);
         db.close();
     }
+
+    public void clearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_TABLE, null, new String[]{});
+        db.close();
+    }
+
 
     public void addBehavior(String behv) {
         SQLiteDatabase db = this.getWritableDatabase();
