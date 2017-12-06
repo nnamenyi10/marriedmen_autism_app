@@ -15,10 +15,14 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 
 public class SettingsActivity extends PreferenceHelper {
@@ -128,7 +132,7 @@ public class SettingsActivity extends PreferenceHelper {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataFragment.class.getName().equals(fragmentName)
                 || AlarmFragment.class.getName().equals(fragmentName)
-                || DataFragment.class.getName().equals(fragmentName);
+                || DebugFragment.class.getName().equals(fragmentName);
     }
 
 
@@ -150,7 +154,9 @@ public class SettingsActivity extends PreferenceHelper {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
 
             }
@@ -171,8 +177,7 @@ public class SettingsActivity extends PreferenceHelper {
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
+            // updated to reflect the new value
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
 
@@ -180,7 +185,9 @@ public class SettingsActivity extends PreferenceHelper {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -188,17 +195,23 @@ public class SettingsActivity extends PreferenceHelper {
     }
     public static class DebugFragment extends Fragment {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            //setContentView(R.layout.activity_debug);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                    Bundle savedInstanceState) {
 
+            super.onCreateView(inflater, container, savedInstanceState);
+            setHasOptionsMenu(true);
+            return inflater.inflate(R.layout.activity_debug, container, false);
         }
+
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), DebugActivity.class));
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -224,7 +237,9 @@ public class SettingsActivity extends PreferenceHelper {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             }
             return super.onOptionsItemSelected(item);
