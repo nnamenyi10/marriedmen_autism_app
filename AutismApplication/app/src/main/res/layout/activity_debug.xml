@@ -15,10 +15,32 @@
 
 
             <Button
-                android:id="@+id/stuffbutton"
+                android:id="@+id/profileClear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="stuff" />
+                android:text="Clear all profiles"
+                android:onClick="profileClearAll" />
+
+            <Button
+                android:id="@+id/activityClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear all activities"
+                android:onClick="activityClearAll"/>
+
+            <Button
+                android:id="@+id/behvClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear all behvs"
+                android:onClick="behvClearAll"/>
+
+            <Button
+                android:id="@+id/logClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear all logs"
+                android:onClick="logClearAll"/>
 
 
         </LinearLayout>

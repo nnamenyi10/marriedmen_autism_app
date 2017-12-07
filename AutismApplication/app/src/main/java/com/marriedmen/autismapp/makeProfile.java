@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Activity2 extends AppCompatActivity {
+public class makeProfile extends AppCompatActivity {
     protected DBHelper mDBHelper;
 
     @Override
@@ -46,9 +46,6 @@ public class Activity2 extends AppCompatActivity {
         if (name.matches("")) {
 
             Toast.makeText(this, "You did not enter a username", Toast.LENGTH_SHORT).show();
-
-            //do nothing, profile needs a name
-            //should also check to make sure there are no duplicate names?
         }
         else {
             profileObj profile = new profileObj(name, info.toString());

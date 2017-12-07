@@ -8,7 +8,7 @@ import android.view.View;
  * Created by Jason on 12/5/2017.
  */
 
-public class TimerActivity extends AppCompatActivity
+public class selectActivity_Activity extends AppCompatActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)

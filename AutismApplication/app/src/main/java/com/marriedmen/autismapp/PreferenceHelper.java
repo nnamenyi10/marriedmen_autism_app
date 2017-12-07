@@ -25,6 +25,7 @@ public class PreferenceHelper extends PreferenceActivity{
             getDelegate().installViewFactory();
             getDelegate().onCreate(savedInstanceState);
             super.onCreate(savedInstanceState);
+
         }
 
         @Override

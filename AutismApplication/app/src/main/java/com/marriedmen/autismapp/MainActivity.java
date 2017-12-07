@@ -2,13 +2,9 @@ package com.marriedmen.autismapp;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements ProfilesFragment.OnProfileSelectedListener {
@@ -23,15 +19,13 @@ public class MainActivity extends AppCompatActivity
         activityTableInit(mDBHelper);
 
         //for testing
-        /*profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
+        profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
         profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
 
         //for testing
-        mDBHelper.addLogTest(fakeprofile);*/
-
-
+        mDBHelper.addLogTest(fakeprofile);
     }
 
     public void activityTableInit(DBHelper db) {
@@ -41,7 +35,7 @@ public class MainActivity extends AppCompatActivity
 
     public void debugClearAll(View v) {
         DBHelper db = new DBHelper(this);
-        db.clearAll();
+        db._profilesclearAll();
     }
 
     public void behvTableInit(DBHelper db) {
@@ -53,14 +47,15 @@ public class MainActivity extends AppCompatActivity
 
     public void onProfileSelected(int position)
     {
-        Intent intent = new Intent(this, TimerActivity.class);
+        Intent intent = new Intent(this, selectActivity_Activity.class);
         startActivity(intent);
     }
 
     public void startActivity_2(View v) {
-        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        Intent intent = new Intent(MainActivity.this, makeProfile.class);
         startActivity(intent);
     }
+
     public void startSettingsActivity(View v) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);

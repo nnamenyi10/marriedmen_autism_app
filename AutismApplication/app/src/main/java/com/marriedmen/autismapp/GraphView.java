@@ -32,7 +32,7 @@ public class GraphView extends AppCompatActivity{
         BarChart chart = (BarChart) findViewById(R.id.chart);
 
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 30f));
+        entries.add(new BarEntry(0f, 100f));
         entries.add(new BarEntry(1f, 80f));
         entries.add(new BarEntry(2f, 60f));
         entries.add(new BarEntry(3f, 50f));

@@ -18,8 +18,6 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class DBHelper extends SQLiteOpenHelper {
-    //TASK 1: DEFINE THE DATABASE AND TABLE
-
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "clients";
 
@@ -28,7 +26,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_TABLE_ACTIVITY = "activity";
     private static final String DATABASE_TABLE_LOGS = "logs";
 
-    //TASK 2: DEFINE THE COLUMN NAMES FOR THE TABLE
     private static final String KEY_PROFILE_ID = "_id";
     private static final String KEY_PROFILE_ID2 = "_id2";
     private static final String KEY_PROFILE_ID3 = "_id3";
@@ -43,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_START_TIME = "startTime";
     private static final String KEY_END_TIME = "endTime";
 
-    private static final String KEY_ACTIVITY_ID = "_logId"; // ?? do we need this?
+    private static final String KEY_ACTIVITY_ID = "_logId";
     private static final String KEY_ACTIVITY_ID2 = "_logId2";
 
     private static final String KEY_BEHV_COUNTER = "behvCounter";
@@ -79,26 +76,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String logTable = "CREATE TABLE " + DATABASE_TABLE_LOGS + "("
                 + KEY_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                // the way to do this parent/child thing is with a foreign key
                 + KEY_PROFILE_ID3 + " INTEGER NOT NULL, "
-                //+ " FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") INTEGER REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+"), "
+                + KEY_ACTIVITY_ID2 + " INTEGER NOT NULL, "
                 + KEY_DATE + " TEXT, "
-                //+ KEY_START_TIME + " TEXT, "
+                + KEY_START_TIME + " TEXT, "
                 + KEY_END_TIME + " TEXT, "
-                // this is the id from the activity table, so we know what activity is being done.
-                + KEY_ACTIVITY_ID2 + " INTEGER, "
-                // options, sql way is to have
                 //an string "1,2,3" with , as parser, will have to convert string 1 to int in analytics
                 + KEY_BEHV_COUNTER + " TEXT, "
-                + "FOREIGN KEY ("+ KEY_PROFILE_ID3 + ") REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+"))";
-
-
-        //this is block only for debugging should be deleted later
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_BEHV);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ACTIVITY);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_LOGS);
-        //end block
+                + "FOREIGN KEY ("+ KEY_PROFILE_ID3
+                + ") REFERENCES "+ DATABASE_TABLE + "("+ KEY_PROFILE_ID+"), "
+                + "FOREIGN KEY ("+ KEY_ACTIVITY_ID2
+                + ") REFERENCES "+ DATABASE_TABLE_ACTIVITY + "("+ KEY_ACTIVITY_ID+")"
+                +")";
 
         db.execSQL(profileTable);
         db.execSQL(activityTable);
@@ -121,31 +110,18 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //********** DATABASE OPERATIONS:  ADD, EDIT, DELETE
-    // Adding new profile
     public void addProfileObj(profileObj profile) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-        //ADD KEY-VALUE PAIR INFORMATION FOR THE TASK DESCRIPTION
-        values.put(KEY_NAME, profile.getName()); // task name
-
-        //ADD KEY-VALUE PAIR INFORMATION FOR
-        //IS_DONE VALUE: 0- NOT DONE, 1 - IS DONE
+        values.put(KEY_NAME, profile.getName());
         values.put(KEY_INFORMATION, profile.getInfo());
-
-        // INSERT THE ROW IN THE TABLE
         db.insert(DATABASE_TABLE, null, values);
-        //taskCount++;
-
-        // CLOSE THE DATABASE CONNECTION
         db.close();
     }
 
     public void addActivity(String activity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(KEY_ACTIVITIES, activity);
         db.insert(DATABASE_TABLE_ACTIVITY, null, values);
         db.close();
@@ -182,46 +158,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void clearAll() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DATABASE_TABLE, null, new String[]{});
-        db.close();
-    }
-
-
     public void addBehavior(String behv) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(KEY_BEHVS, behv);
-
         db.insert(DATABASE_TABLE_BEHV, null, values);
         db.close();
     }
 
     public String[] getProfiles() {
-        //get length of profiles databases
-        /*String[] namelist = new String[10];
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT " + KEY_NAME + " FROM " + DATABASE_TABLE;
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
 
-        //String str = cursor.getString(0);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                String str = cursor.getString(0);
-                namelist[count] = str;
-                count++;
-            } while (cursor.moveToNext());
-            count = 0;
-        }
-
-        return namelist;*/
         SQLiteDatabase db = getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
-        //db.close();
+
         Log.d("test", "getProfiles: " + count);
         String[] profiles = new String[(int)count];
         Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE, null);
@@ -234,12 +183,33 @@ public class DBHelper extends SQLiteOpenHelper {
             mCursor.moveToNext();
         }
 
-        //String[] test = new String[] {"test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"};
-        //return test;
         return profiles;
     }
 
-    //for testing, can be generalized
+    public void _profilesclearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_TABLE, null, new String[]{});
+        db.close();
+    }
+
+    public void _logClearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_TABLE_LOGS, null, new String[]{});
+        db.close();
+    }
+
+    public void _behvClearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_TABLE_BEHV, null, new String[]{});
+        db.close();
+    }
+
+    public void _activityClearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_TABLE_ACTIVITY, null, new String[]{});
+        db.close();
+    }
+
     public String testingquery() {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -247,77 +217,10 @@ public class DBHelper extends SQLiteOpenHelper {
         String test_query = "SELECT * FROM " +DATABASE_TABLE+  " INNER JOIN " +DATABASE_TABLE_LOGS+ " ON "
                 + DATABASE_TABLE_LOGS+ "." +KEY_PROFILE_ID3+ " = " +DATABASE_TABLE+ "." + KEY_PROFILE_ID;
 
-        /*
-        String MY_QUERY =
-                "SELECT * FROM table_a a INNER JOIN table_b b ON a.id=b.other_id WHERE b.property_id=?";
-
-        db.rawQuery(MY_QUERY, new String[]{String.valueOf(propertyId)});
-        */
-
-        //GET ALL THE TASK ITEMS ON THE LIST
-        //List<profileObj> profileList = new ArrayList<ToDo_Item>();
-
-        //SELECT ALL QUERY FROM THE TABLE
         String selectQuery = "SELECT " + KEY_BEHVS + " FROM " + DATABASE_TABLE_BEHV;
-
-
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-
-        //Cursor cursor = db.rawQuery(test_query, null);
-
         cursor.moveToFirst();
-
         String str = cursor.getString(0);
-
-        //cursor.moveToNext();
-        //String name2 = cursor.getString(0);
         return str;
     }
-/*
-        // LOOP THROUGH THE TODO TASKS
-        if (cursor.moveToFirst()) {
-            do {
-                ToDo_Item task = new ToDo_Item();
-                task.setId(cursor.getInt(0));
-                task.setDescription(cursor.getString(1));
-                task.setIs_done(cursor.getInt(2));
-                todoList.add(task);
-            } while (cursor.moveToNext());
-        }
-
-        // RETURN THE LIST OF TASKS FROM THE TABLE
-        return todoList;
-    }
-
-    public void clearAll(List<ToDo_Item> list) {
-        //GET ALL THE LIST TASK ITEMS AND CLEAR THEM
-        list.clear();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DATABASE_TABLE, null, new String[]{});
-        db.close();
-    }
-
-    public void deleteSelected(List<ToDo_Item> list) {
-
-        for(Iterator<ToDo_Item> i=list.iterator() ; i.hasNext();){
-            ToDo_Item item=i.next();
-            if(item.getIs_done()==1) i.remove();
-        }
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DATABASE_TABLE, KEY_IS_DONE+"=1", new String[]{});
-        db.close();
-    }
-
-    public void updateTask(ToDo_Item task) {
-        // updating row
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_DESCRIPTION, task.getDescription());
-        values.put(KEY_IS_DONE, task.getIs_done());
-        db.update(DATABASE_TABLE, values, KEY_TASK_ID + " = ?", new String[]{String.valueOf(task.getId())});
-        db.close();
-    }
-*/
 }
