@@ -18,12 +18,12 @@ public class makeProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-        TextView text = (TextView) findViewById(R.id.textView);
+        //TextView text = (TextView) findViewById(R.id.textView);
 
         //information added in MainActivity
         mDBHelper = new DBHelper(this);
 
-        text.setText( mDBHelper.testingquery());
+        //text.setText( mDBHelper.testingquery());
         /*
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
@@ -40,7 +40,7 @@ public class makeProfile extends AppCompatActivity {
 
     public void makeProfile(View view){
         EditText nameET = (EditText)findViewById(R.id.editTextName);
-        EditText info = (EditText)findViewById(R.id.editTextInformation);
+        //EditText info = (EditText)findViewById(R.id.editTextInformation);
         String name = nameET.getText().toString();
 
         if (name.matches("")) {
@@ -48,7 +48,7 @@ public class makeProfile extends AppCompatActivity {
             Toast.makeText(this, "You did not enter a username", Toast.LENGTH_SHORT).show();
         }
         else {
-            profileObj profile = new profileObj(name, info.toString());
+            profileObj profile = new profileObj(name, null);//info.toString());
             mDBHelper.addProfileObj(profile);
             finish();
         }

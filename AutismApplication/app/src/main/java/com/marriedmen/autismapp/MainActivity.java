@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity
         activityTableInit(mDBHelper);
 
         //for testing
-        profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
+        /*profileObj fakeprofile = new profileObj("Jeffery Dahmer", "bad man");
         profileObj fakeprofile2 = new profileObj("Chistopher Scarver", "Killed Jeff");
         mDBHelper.addProfileObj(fakeprofile);
         mDBHelper.addProfileObj(fakeprofile2);
 
         //for testing
-        mDBHelper.addLogTest(fakeprofile);
+        mDBHelper.addLogTest(fakeprofile);*/
 
     }
 
@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void behvTableInit(DBHelper db) {
-        db.addBehavior("eating people");
-        db.addBehavior("murder");
-        db.addBehavior("drugging men");
-        db.addBehavior("necrophilia");
+        db.addBehavior("Self-injury");
+        db.addBehavior("Property destruction");
+        db.addBehavior("Talking back");
+        db.addBehavior("Work refusal");
     }
 
     public void onProfileSelected(int position)
