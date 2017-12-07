@@ -171,7 +171,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
 
-        Log.d("test", "getProfiles: " + count);
+        //Log.d("test", "getProfiles: " + count);
         String[] profiles = new String[(int)count];
         Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE, null);
         mCursor.moveToFirst();

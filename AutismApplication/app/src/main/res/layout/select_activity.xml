@@ -8,15 +8,18 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Testing Stuff"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="done"
             android:onClick="goBack"/>
+
+        <TextView
+            android:id="@+id/select_activity_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Testing Stuff"/>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
