@@ -64,12 +64,13 @@
 
 
 
-    <!-- need to implement these
 
-    <string name ="bar">Bar</string>
-    <string name ="line">Line</string>
+    <string-array name="graph_styles">
+        <item>Bar</item>
+        <item>Line</item>
+    </string-array>
 
-     -->
+
 
 
 

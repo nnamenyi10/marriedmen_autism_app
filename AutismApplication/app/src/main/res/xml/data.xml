@@ -10,25 +10,15 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_data_length_days" />
 
+    <ListPreference
+        android:saveEnabled="true"
+        android:title="Graph Styles"
+        android:key="graph_styles"
+        android:entries="@array/graph_styles"
+        android:entryValues="@array/graph_styles"
+        android:defaultValue="Line"
+        android:summary="%s"
 
-    <!--  need to figure out why these dont work
-
-       <RadioGroup>
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <RadioButton android:id="@+id/radio_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bar"
-        android:onClick="onRadioButtonClicked"/>
-    <RadioButton android:id="@+id/radio_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/line"
-        android:onClick="onRadioButtonClicked"/>
-</RadioGroup>
-
--->
+        />
 
 </PreferenceScreen>

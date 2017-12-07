@@ -19,10 +19,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
+import com.marriedmen.autismapp.MainActivity;
 
-import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 
 public class SettingsActivity extends PreferenceHelper {
@@ -204,7 +203,6 @@ public class SettingsActivity extends PreferenceHelper {
         }
 
 
-
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
@@ -224,14 +222,13 @@ public class SettingsActivity extends PreferenceHelper {
             addPreferencesFromResource(R.xml.data);
             setHasOptionsMenu(true);
 
+
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("data_frequency"));
         }
-
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
