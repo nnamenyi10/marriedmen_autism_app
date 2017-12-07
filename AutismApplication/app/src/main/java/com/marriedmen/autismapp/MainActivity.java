@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity
     public void onProfileSelected(int position)
     {
         Intent intent = new Intent(this, selectActivity_Activity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("position", position);
+        intent.putExtras(bundle);
+
         startActivity(intent);
     }
 
