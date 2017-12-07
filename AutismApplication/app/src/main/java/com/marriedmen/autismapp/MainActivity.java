@@ -1,6 +1,8 @@
 package com.marriedmen.autismapp;
 
 import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 
         //for testing
         mDBHelper.addLogTest(fakeprofile);
+
     }
 
     public void activityTableInit(DBHelper db) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     public void debugClearAll(View v) {
         DBHelper db = new DBHelper(this);
         db._profilesclearAll();
+        refreshFragment();
     }
 
     public void behvTableInit(DBHelper db) {
@@ -67,10 +71,24 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onStart()
+    /*public void ()
     {
         super.onStart();
         Fragment frag = getFragmentManager().findFragmentById(R.id.profiles_fragment);
+    }*/
 
+    public void refreshFragment()
+    {
+        FragmentManager fragMan = getSupportFragmentManager();
+        FragmentTransaction fragTrans = fragMan.beginTransaction();
+        ProfilesFragment profFrag = new ProfilesFragment();
+        fragTrans.replace(R.id.profiles_fragment, profFrag);
+        fragTrans.commit();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        refreshFragment();
     }
 }

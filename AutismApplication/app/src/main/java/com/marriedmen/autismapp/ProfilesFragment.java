@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -19,7 +21,7 @@ import static android.content.ContentValues.TAG;
 public class ProfilesFragment extends ListFragment
 {
     OnProfileSelectedListener mCallback;
-
+    DBHelper db;
 
     public interface OnProfileSelectedListener
     {
@@ -40,7 +42,7 @@ public class ProfilesFragment extends ListFragment
         //DBHelper db = new DBHelper(getActivity());
         //SQLiteDatabase db = this.getReadableDatabase();
 
-        DBHelper db = new DBHelper(getActivity());
+        db = new DBHelper(getActivity());
         try
         {
             String[] profiles = db.getProfiles();
@@ -86,4 +88,10 @@ public class ProfilesFragment extends ListFragment
         mCallback.onProfileSelected(position);
         getListView().setItemChecked(position, true);
     }
+
+    /*public void refreshProfiles(String[] profiles)
+    {
+        int layout = android.R.layout.simple_list_item_activated_1;
+        setListAdapter(new ArrayAdapter<>(getActivity(), layout, profiles));
+    }*/
 }
