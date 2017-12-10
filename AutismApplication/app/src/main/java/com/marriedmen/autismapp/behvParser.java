@@ -6,16 +6,17 @@ package com.marriedmen.autismapp;
 
 public class behvParser {
     private int[] behvCounts;
-    private DBHelper mDBHelper;
+    //private DBHelper mDBHelper;
 
     //constructor
     public behvParser(DBHelper mDBHelper) {
-        this.mDBHelper = mDBHelper;
+        //this.mDBHelper = mDBHelper;
         Integer size = mDBHelper.getBehvTableSize();
+
         //each index corresponds to a behv in db behv_table
         behvCounts = new int[size];
         //init all to untracked rep as -1
-        for (int i: behvCounts) {
+        for (int i = 0; i < behvCounts.length; i++) {
             behvCounts[i] = -1;
         }
     }
