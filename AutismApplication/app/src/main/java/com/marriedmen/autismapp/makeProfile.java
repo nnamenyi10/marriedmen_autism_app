@@ -1,15 +1,10 @@
 package com.marriedmen.autismapp;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class makeProfile extends AppCompatActivity {
     protected DBHelper mDBHelper;
@@ -17,24 +12,16 @@ public class makeProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_2);
+        setContentView(R.layout.make_profile);
         //TextView text = (TextView) findViewById(R.id.textView);
 
-        //information added in MainActivity
         mDBHelper = new DBHelper(this);
+        /*Integer[][] sparse = {{0,11},{1,22}};
+        Integer[] list = {1,2,3,4};
+        behvStringBuilder test = new behvStringBuilder();
 
-        //text.setText( mDBHelper.testingquery());
-        /*
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-        String formattedDate = date.format(cal.getTime());
-        String formattedTime = time.format(cal.getTime());
-        text.setText(formattedDate + "   " + formattedTime);
+        text.setText(test.buildString(3,sparse));
         */
-
-        //text.setText("Must input a profile name, all other fields may be blank");
-
     }
 
 

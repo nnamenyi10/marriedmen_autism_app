@@ -210,6 +210,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public int getBehvTableSize() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long size = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE_BEHV);
+        Integer i = (int) (long) size;
+        db.close();
+        return i;
+    }
+
     public String testingquery() {
         SQLiteDatabase db = this.getReadableDatabase();
 
