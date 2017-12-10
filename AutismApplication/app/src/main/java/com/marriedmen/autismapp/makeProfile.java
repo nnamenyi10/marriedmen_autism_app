@@ -4,10 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class makeProfile extends AppCompatActivity {
-    protected DBHelper mDBHelper;
+    DBHelper mDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +17,19 @@ public class makeProfile extends AppCompatActivity {
         //TextView text = (TextView) findViewById(R.id.textView);
 
         mDBHelper = new DBHelper(this);
+
+        /*
+        behvParser parser = new behvParser(mDBHelper);
+        parser.getBehvCounts("1,2,3");
+        */
+
         /*Integer[][] sparse = {{0,11},{1,22}};
         Integer[] list = {1,2,3,4};
         behvStringBuilder test = new behvStringBuilder();
-
-        text.setText(test.buildString(3,sparse));
         */
+
+        //text.setText(parser.toString());
+
     }
 
 

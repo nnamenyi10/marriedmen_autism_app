@@ -9,14 +9,14 @@ public class behvParser {
     private DBHelper mDBHelper;
 
     //constructor
-    public void behvParser(DBHelper mDBHelper) {
+    public behvParser(DBHelper mDBHelper) {
         this.mDBHelper = mDBHelper;
         Integer size = mDBHelper.getBehvTableSize();
         //each index corresponds to a behv in db behv_table
         behvCounts = new int[size];
         //init all to untracked rep as -1
         for (int i: behvCounts) {
-            i = -1;
+            behvCounts[i] = -1;
         }
     }
 
@@ -41,5 +41,13 @@ public class behvParser {
 
     public int[] getBehvCounts() {
         return behvCounts;
+    }
+
+    public String toString() {
+        String temp = "";
+        for (Integer i : behvCounts) {
+            temp += " " + Integer.toString(i);
+        }
+        return temp;
     }
 }
