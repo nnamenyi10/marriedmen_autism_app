@@ -25,7 +25,6 @@ public class ProfilesFragment extends ListFragment
 
     public interface OnProfileSelectedListener
     {
-        //TODO add function to activity main
         void onProfileSelected(int position);
     }
 

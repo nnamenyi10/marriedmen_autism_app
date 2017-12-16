@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@+id/activity_spinner" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/behv_sel_frame"
         android:layout_width="match_parent"
         android:layout_height="388dp"
         android:layout_marginBottom="8dp"
