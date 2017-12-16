@@ -21,6 +21,8 @@
         <activity android:name=".selectActivity_Activity"></activity>
         <activity android:name=".GraphView"></activity>
         <activity android:name=".DebugActivity"></activity>
+        <activity android:name=".What2Graph"></activity>
+
     </application>
 
 </manifest>

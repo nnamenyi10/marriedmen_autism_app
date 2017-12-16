@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void startW2GraphActivity(View v) {
+        Intent intent = new Intent(MainActivity.this, What2Graph.class);
+        startActivity(intent);
+    }
+
     /*public void ()
     {
         super.onStart();

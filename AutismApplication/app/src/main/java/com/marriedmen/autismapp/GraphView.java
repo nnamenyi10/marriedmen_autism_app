@@ -24,7 +24,7 @@ import java.util.List;
 
 
 
-public class GraphView extends AppCompatActivity{
+public class GraphView extends AppCompatActivity{   // (List<BarEntries>)
 
 
     @Override
@@ -53,6 +53,23 @@ public class GraphView extends AppCompatActivity{
         entries.add(new BarEntry(4f, 0f));
         entries.add(new BarEntry(5f, 7f));
         entries.add(new BarEntry(6f, 6f));
+
+        /*
+        * ways to make this outside of here:
+        *
+        * List<BarEntries> entries = new ArrayList<>();
+        *
+        * for(int i = 0; i < 8; i++){
+        *   an array of counts from the last 7 logs;
+         *  log[i];
+         *  entries.add(new BarEntry(i, log[i]));
+        * }
+        *
+        * once entries is filled out we can pass it to GraphView
+        *
+        *
+        *
+        * */
 
         BarDataSet set = new BarDataSet(entries, "Occurrences of bad behaviors");
 
