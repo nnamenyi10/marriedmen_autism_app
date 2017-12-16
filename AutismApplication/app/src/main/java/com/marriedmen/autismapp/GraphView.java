@@ -10,9 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,24 +33,57 @@ public class GraphView extends AppCompatActivity{
         setContentView(R.layout.test_graph);
         setupActionBar();
 
+        final String[] weekdays = new String[]
+                {"Mon","Tues","Wed","Thurs","Fri","Sat","Sun"};
 
+        IAxisValueFormatter formatter = new IAxisValueFormatter() {
+
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return weekdays[(int) value];
+            }
+        };//use this to build a string of values the axis can use
         BarChart chart = (BarChart) findViewById(R.id.chart);
 
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 100f));
-        entries.add(new BarEntry(1f, 80f));
-        entries.add(new BarEntry(2f, 60f));
-        entries.add(new BarEntry(3f, 50f));
-        // gap of 2f
-        entries.add(new BarEntry(5f, 70f));
-        entries.add(new BarEntry(6f, 60f));
+        entries.add(new BarEntry(0f, 2f));
+        entries.add(new BarEntry(1f, 8f));
+        entries.add(new BarEntry(2f, 6f));
+        entries.add(new BarEntry(3f, 5f));
+        entries.add(new BarEntry(4f, 0f));
+        entries.add(new BarEntry(5f, 7f));
+        entries.add(new BarEntry(6f, 6f));
 
-        BarDataSet set = new BarDataSet(entries, "BarDataSet");
+        BarDataSet set = new BarDataSet(entries, "Occurrences of bad behaviors");
 
         BarData data = new BarData(set);
+
         data.setBarWidth(0.9f); // set custom bar width
         chart.setData(data);
+
+        YAxis left = chart.getAxisLeft();
+        left.setDrawLabels(true); // no axis labels
+        left.setDrawAxisLine(false); // no axis line
+        left.setDrawGridLines(true); // no grid lines
+        left.setDrawZeroLine(true); // draw a zero line
+        chart.getAxisRight().setEnabled(false); // no right axis
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1f); // min interval is 1
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(10f);
+        xAxis.setValueFormatter(formatter);//set the x-axis values
+        xAxis.setDrawGridLines(false);
+
         chart.setFitBars(true); // make the x-axis fit exactly all bars
+
+        chart.setPinchZoom(true); // lets you zoom in on the chart
+
+        Description description = new Description();
+        description.setText("");
+        chart.setDescription(description);
+        //set the chart description to nothing
+
         chart.invalidate(); // refresh
     }
 
