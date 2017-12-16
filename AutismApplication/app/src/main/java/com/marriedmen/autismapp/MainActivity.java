@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void activityTableInit(DBHelper db) {
+        db.addActivity("playtime");
         db.addActivity("bedtime");
         db.addActivity("dinner");
     }
