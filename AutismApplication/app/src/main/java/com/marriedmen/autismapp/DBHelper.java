@@ -218,6 +218,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return i;
     }
 
+    public void test(){
+        //select * from DATABASE_TABLE inner join DATABASE_TABLE_LOG on DATABASE_TABLE_LOG.CHILD_ID = DATABASE_TABLE.ID
+    }
+
     public String testingquery() {
         SQLiteDatabase db = this.getReadableDatabase();
 
