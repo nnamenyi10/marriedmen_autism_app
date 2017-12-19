@@ -185,6 +185,43 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return profiles;
     }
+    public String[] getBehaviors() {
+        SQLiteDatabase db = getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE_BEHV);
+
+        //Log.d("test", "getProfiles: " + count);
+        String[] behaviors = new String[(int)count];
+        Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE_BEHV, null);
+        mCursor.moveToFirst();
+        for (int i = 0; i < count; i++)
+        {
+            if (mCursor.isAfterLast() || mCursor == null){ break; }
+            String name = mCursor.getString(mCursor.getColumnIndex(KEY_BEHVS));
+            behaviors[i] = name;
+            mCursor.moveToNext();
+        }
+
+        return behaviors;
+
+    }
+
+    public String[] getActivities() {
+        SQLiteDatabase db = getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE_ACTIVITY);
+
+        String[] activities = new String[(int)count];
+        Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE_ACTIVITY, null);
+        mCursor.moveToFirst();
+        for (int i = 0; i < count; i++)
+        {
+            if (mCursor.isAfterLast() || mCursor == null){ break; }
+            String name = mCursor.getString(mCursor.getColumnIndex(KEY_ACTIVITIES));
+            activities[i] = name;
+            mCursor.moveToNext();
+        }
+
+        return activities;
+    }
 
     public void _profilesclearAll() {
         SQLiteDatabase db = this.getWritableDatabase();

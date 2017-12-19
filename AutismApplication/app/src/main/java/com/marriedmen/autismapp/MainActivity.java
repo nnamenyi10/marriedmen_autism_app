@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void activityTableInit(DBHelper db) {
+        db.addActivity("playtime");
         db.addActivity("bedtime");
         db.addActivity("dinner");
     }
@@ -73,6 +74,11 @@ public class MainActivity extends AppCompatActivity
 
     public void startGraphActivity(View v) {
         Intent intent = new Intent(MainActivity.this, GraphView.class);
+        startActivity(intent);
+    }
+
+    public void startW2GraphActivity(View v) {
+        Intent intent = new Intent(MainActivity.this, What2Graph.class);
         startActivity(intent);
     }
 
