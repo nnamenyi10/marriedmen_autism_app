@@ -22,11 +22,13 @@ public class BehaviorsFragment extends ListFragment
 {
     What2GraphListener mCallback;
     DBHelper db;
+    Integer[] behvOnArray;
+    Integer behvSize;
+
 
     public interface What2GraphListener
     {
         //TODO add function to activity main
-        void onProfileSelected(int position);
     }
 
     @Override
@@ -42,6 +44,7 @@ public class BehaviorsFragment extends ListFragment
         try
         {
             String[] behavs = db.getBehaviors();
+            behvSize = behavs.length;
             setListAdapter(new ArrayAdapter<>(getActivity(), layout, behavs));
         }
         catch (Exception e)
@@ -54,6 +57,15 @@ public class BehaviorsFragment extends ListFragment
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
+        //index correction.
+        //position = position - 1;
+
+        if (behvOnArray[position] == 1) {
+            behvOnArray[position] = 0;
+        }
+        else {
+            behvOnArray[position] = 1;
+        }
         getListView().setItemChecked(position, true);
     }
 
