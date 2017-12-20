@@ -223,6 +223,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return activities;
     }
 
+    public String[] getIDs() {
+        SQLiteDatabase db = getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
+
+        String[] IDs = new String[(int)count];
+        Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE, null);
+        mCursor.moveToFirst();
+        for (int i = 0; i < count; i++)
+        {
+            if (mCursor.isAfterLast() || mCursor == null){ break; }
+            String ID = mCursor.getString(mCursor.getColumnIndex(KEY_PROFILE_ID));
+            IDs[i] = ID;
+            mCursor.moveToNext();
+        }
+
+        return IDs;
+    }
+
     public void _profilesclearAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DATABASE_TABLE, null, new String[]{});

@@ -16,13 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".makeProfile"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".selectActivity_Activity"></activity>
-        <activity android:name=".GraphView"></activity>
-        <activity android:name=".DebugActivity"></activity>
-        <activity android:name=".What2Graph"></activity>
-
+        <activity android:name=".makeProfile" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".selectActivity_Activity" />
+        <activity android:name=".GraphView" />
+        <activity android:name=".DebugActivity" />
+        <activity android:name=".What2Graph" />
+        <activity android:name=".CounterActivity"></activity>
     </application>
 
 </manifest>
