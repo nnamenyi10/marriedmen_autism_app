@@ -30,6 +30,7 @@ import java.util.List;
 public class selectActivity_Activity extends AppCompatActivity
 {
     private int numberSelected = 0;
+    private final int MAX_BEHV = 10;
 
     private String[] activities;
     private String[] behaviors;
@@ -159,8 +160,8 @@ public class selectActivity_Activity extends AppCompatActivity
                         CheckBox check = (CheckBox) view;
                         Behv_Item tag = (Behv_Item)check.getTag();
                         if (check.isChecked() == true) {
-                            if (numberSelected >= 6) {
-                                Toast.makeText(context, "Please choose no more than six behaviors", Toast.LENGTH_SHORT).show();
+                            if (numberSelected >= MAX_BEHV) {
+                                Toast.makeText(context, "Please choose no more than " + MAX_BEHV + " behaviors", Toast.LENGTH_SHORT).show();
                                 check.setChecked(false);
                             }
                             else {
