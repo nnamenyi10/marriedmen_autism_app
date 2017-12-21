@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,8 +44,10 @@ public class selectActivity_Activity extends AppCompatActivity
     private String ID;
 
     private DBHelper db;
-    private List<Behv_Item> list;
-    private BehvAdapter adapt;
+    private List<Behv_Item> behvList;
+    private BehvAdapter behvAdapt;
+    private ArrayAdapter actAdapt;
+    private List<String> actList;
 
 
 
@@ -70,12 +73,13 @@ public class selectActivity_Activity extends AppCompatActivity
         activities = db.getActivities();
         behaviors = db.getBehaviors();
         String[] IDs = db.getIDs();
-        list = new ArrayList<Behv_Item>();
+        behvList = new ArrayList<>();
 
         //have to convert array to list
+        actList = new ArrayList<>();
         for (int i = 0; i < behaviors.length; i++) {
             Behv_Item behv = new Behv_Item(behaviors[i], 0);
-            list.add(behv);
+            behvList.add(behv);
         }
 
         profile = profiles[position];
@@ -90,7 +94,9 @@ public class selectActivity_Activity extends AppCompatActivity
 
         // set up the activity selector
         Spinner actSpin = (Spinner)findViewById(R.id.activity_spinner);
-        ArrayAdapter actAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, activities);
+        //actList = Arrays.asList(activities);
+        for (int i = 0; i < activities.length; i++) { actList.add(activities[i]); }
+        actAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, actList);
         actSpin.setAdapter(actAdapt);
 
         // set up the behavior selector
@@ -103,9 +109,9 @@ public class selectActivity_Activity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        adapt = new BehvAdapter(this, R.layout.behavior_item, list);
+        behvAdapt = new BehvAdapter(this, R.layout.behavior_item, behvList);
         ListView listBehv = (ListView) findViewById(R.id.behv_sel_frame);
-        listBehv.setAdapter(adapt);
+        listBehv.setAdapter(behvAdapt);
     }
 
     @Override
@@ -138,11 +144,11 @@ public class selectActivity_Activity extends AppCompatActivity
 
     private class BehvAdapter extends ArrayAdapter<Behv_Item> {
         Context context;
-        List<Behv_Item> behvList = new ArrayList<>();
+        List<Behv_Item> behaviorList = new ArrayList<>();
 
         public BehvAdapter(Context c, int rId, List<Behv_Item> behvs) {
             super(c, rId, behvs);
-            behvList = behvs;
+            behaviorList = behvs;
             context = c;
         }
 
@@ -181,7 +187,7 @@ public class selectActivity_Activity extends AppCompatActivity
                 });
             }
             else { selected = (CheckBox) convertView.getTag(); }
-            Behv_Item current = behvList.get(position);
+            Behv_Item current = behaviorList.get(position);
             selected.setText(current.getBehv());
             selected.setChecked(current.selected == 1);
             selected.setTag(current);
@@ -224,7 +230,7 @@ public class selectActivity_Activity extends AppCompatActivity
 
         String[] selected = new String[numberSelected];
         int pointer = 0;
-        for(Behv_Item bi:list) {
+        for(Behv_Item bi:behvList) {
             if (bi.getSelected() == 1) {
                 selected[pointer] = bi.getBehv();
                 pointer++;
@@ -237,24 +243,67 @@ public class selectActivity_Activity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void addActivity(View view) {
+    public void addBehavior(View view) {
         AlertDialog.Builder prompt = new AlertDialog.Builder(this);
-        prompt.setTitle("Add Activity");
-        prompt.setMessage("Add new activity");
+        prompt.setTitle("Add Behavior");
+        prompt.setMessage("Add a new unique behavior to track");
 
         final EditText input = new EditText(this);
+        prompt.setView(input);
         prompt.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.d("test", dialog.toString());
+                //Log.d("test", input.getText().toString());
+                String behavior = input.getText().toString();
+
+                for (Behv_Item bi:behvList) {
+                    if(bi.getBehv().equals(behavior) || behavior.equals("")) {
+                        Toast.makeText(selectActivity_Activity.this, "Behavior must be unique and not empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                db.addBehavior(behavior);
+                Behv_Item bi = new Behv_Item(behavior, 0);
+                behvList.add(bi);
+                behvAdapt.notifyDataSetChanged();
             }
         });
 
-        prompt.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        prompt.setNegativeButton("Cancel", null);
+        prompt.show();
+    }
+
+    public void addActivity(View view) {
+        AlertDialog.Builder prompt = new AlertDialog.Builder(this);
+        prompt.setTitle("Add Activity");
+        prompt.setMessage("Add a new unique activity to track");
+
+        final EditText input = new EditText(this);
+        prompt.setView(input);
+        prompt.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Log.d("test", input.getText().toString());
+                String activity = input.getText().toString();
 
+                for(String act:actList) {
+                    if (act.equals(activity) || activity.equals("")) {
+                        Toast.makeText(selectActivity_Activity.this, "Activity must be unique and not empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                db.addActivity(activity);
+                //Behv_Item bi = new Behv_Item(behavior, 0);
+                //actList.add(activity);
+                //activities = db.getActivities();
+                actList.add(activity);
+                actAdapt.notifyDataSetChanged();
             }
         });
+
+        prompt.setNegativeButton("Cancel", null);
+        prompt.show();
     }
 }
