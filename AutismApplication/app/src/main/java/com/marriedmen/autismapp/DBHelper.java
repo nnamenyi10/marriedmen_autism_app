@@ -223,17 +223,35 @@ public class DBHelper extends SQLiteOpenHelper {
         return activities;
     }
 
-    public String[] getIDs() {
+    public int[] getActIDs() {
+        SQLiteDatabase db = getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE_ACTIVITY);
+
+        int[] activityIDs = new int[(int)count];
+        Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE_ACTIVITY, null);
+        mCursor.moveToFirst();
+        for (int i = 0; i < count; i++)
+        {
+            if (mCursor.isAfterLast() || mCursor == null){ break; }
+            int id = mCursor.getInt(mCursor.getColumnIndex(KEY_ACTIVITY_ID));
+            activityIDs[i] = id;
+            mCursor.moveToNext();
+        }
+
+        return activityIDs;
+    }
+
+    public int[] getIDs() {
         SQLiteDatabase db = getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, DATABASE_TABLE);
 
-        String[] IDs = new String[(int)count];
+        int[] IDs = new int[(int)count];
         Cursor mCursor = db.rawQuery("select * from " + DATABASE_TABLE, null);
         mCursor.moveToFirst();
         for (int i = 0; i < count; i++)
         {
             if (mCursor.isAfterLast() || mCursor == null){ break; }
-            String ID = mCursor.getString(mCursor.getColumnIndex(KEY_PROFILE_ID));
+            int ID = mCursor.getInt(mCursor.getColumnIndex(KEY_PROFILE_ID));
             IDs[i] = ID;
             mCursor.moveToNext();
         }

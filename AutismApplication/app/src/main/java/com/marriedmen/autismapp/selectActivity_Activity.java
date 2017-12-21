@@ -38,10 +38,11 @@ public class selectActivity_Activity extends AppCompatActivity
 
     private String[] activities;
     private String[] behaviors;
-    private String[] IDs;
+    private int[] IDs;
+    private int[] actIDs;
 
     private String profile;
-    private String ID;
+    private int ID;
 
     private DBHelper db;
     private List<Behv_Item> behvList;
@@ -72,7 +73,8 @@ public class selectActivity_Activity extends AppCompatActivity
         String[] profiles = db.getProfiles();
         activities = db.getActivities();
         behaviors = db.getBehaviors();
-        String[] IDs = db.getIDs();
+        IDs = db.getIDs();
+        actIDs = db.getActIDs();
         behvList = new ArrayList<>();
 
         //have to convert array to list
@@ -222,11 +224,20 @@ public class selectActivity_Activity extends AppCompatActivity
             return;
         }
 
+        Spinner spin = (Spinner) findViewById(R.id.activity_spinner);
+        String act = spin.getSelectedItem().toString();
+        int idPointer = 0;
+        for (int i = 0; i < activities.length; i++) {
+            if (activities[i].equals(act)) {idPointer = i; }
+        }
+
         Intent intent = new Intent(this, CounterActivity.class);
         Bundle bundle = new Bundle();
 
         bundle.putString("profile", profile);
-        bundle.putString("ID", ID);
+        bundle.putInt("ID", ID);
+        bundle.putString("activity", act);
+        bundle.putInt("actID", actIDs[idPointer]);
 
         String[] selected = new String[numberSelected];
         int pointer = 0;
