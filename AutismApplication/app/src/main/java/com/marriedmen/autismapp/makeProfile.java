@@ -1,7 +1,9 @@
 package com.marriedmen.autismapp;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class makeProfile extends AppCompatActivity {
         //TextView text = (TextView) findViewById(R.id.textView);
 
         mDBHelper = new DBHelper(this);
-
+        setupActionBar();
         /*
         behvParser parser = new behvParser(mDBHelper);
         parser.getBehvCounts("1,2,3");
@@ -49,8 +51,23 @@ public class makeProfile extends AppCompatActivity {
         }
     }
 
-    public void goBack(View view){
-        finish();
-        //onBackPressed(); ----don't need this
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up(Back) button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //when you hit back arrow call finish
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
