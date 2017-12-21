@@ -1,12 +1,14 @@
 package com.marriedmen.autismapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -232,5 +235,26 @@ public class selectActivity_Activity extends AppCompatActivity
         intent.putExtras(bundle);
 
         startActivity(intent);
+    }
+
+    public void addActivity(View view) {
+        AlertDialog.Builder prompt = new AlertDialog.Builder(this);
+        prompt.setTitle("Add Activity");
+        prompt.setMessage("Add new activity");
+
+        final EditText input = new EditText(this);
+        prompt.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.d("test", dialog.toString());
+            }
+        });
+
+        prompt.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 }
