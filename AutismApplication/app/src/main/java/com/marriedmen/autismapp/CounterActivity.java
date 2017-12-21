@@ -91,7 +91,7 @@ public class CounterActivity extends AppCompatActivity {
             info[i][1] = counts[i];
         }
 
-        //String stringArray = builder.buildString(size, info);
+        String stringArray = builder.buildString(size - 1, info);
 
         //mDBHelper.addLog(0,0,stringArray);
         finish();
