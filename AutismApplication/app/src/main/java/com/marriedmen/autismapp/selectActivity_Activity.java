@@ -222,7 +222,7 @@ public class selectActivity_Activity extends AppCompatActivity
         int pointer = 0;
         for(Behv_Item bi:list) {
             if (bi.getSelected() == 1) {
-                selected[0] = bi.getBehv();
+                selected[pointer] = bi.getBehv();
                 pointer++;
             }
         }

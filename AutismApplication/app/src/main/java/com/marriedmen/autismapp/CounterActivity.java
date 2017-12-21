@@ -2,6 +2,7 @@ package com.marriedmen.autismapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +21,12 @@ public class CounterActivity extends AppCompatActivity {
         behvs= bundle.getStringArray("behaviors");
         id = bundle.getString("ID");
 
-        //text.setText(Integer.toString(behvs.length));
+        text.setText(behvs[1]);//Integer.toString();
+
+        Button[] buttons = new Button[behvs.length];
+        TextView[] counts = new TextView[behvs.length];
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.myLayout);
 
         for (int i = 0; i < behvs.length; i++){
 
@@ -28,15 +34,21 @@ public class CounterActivity extends AppCompatActivity {
              //       LinearLayout.LayoutParams.MATCH_PARENT,
              //       LinearLayout.LayoutParams.WRAP_CONTENT );
 
-            LinearLayout layout = (LinearLayout) findViewById(R.id.myLayout);
+            buttons[i] = new Button(this); //initialize the button here
+            buttons[i].setText(behvs[i]);
+            buttons[i].setId(i+1);
 
-            Button myButton = new Button(this);
-            myButton.setText("Push Me");
-            myButton.setId(i);
-            myButton.setText("button" + Integer.toString(i));
-            layout.addView(myButton);
+            //counts[i] = new TextView
 
+            final int index = i;
 
+            buttons[i].setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View view) {
+                    //do something
+                }
+            });
+            layout.addView(buttons[i]);
         }
     }
 }
