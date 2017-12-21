@@ -44,14 +44,19 @@ public class behvStringBuilder {
         for (int i = 0; i < size; i++) {
             behvCounts[i] = -1;
         }
-
+/*
+        for (int i =0; i < size; i++) {
+            int index = behvs[i][0];
+            int count = behvs[i][1];
+            behvCounts[index] = count;
+        }*/
 
         for (Integer[] i : behvs) {
             int index = i[0];
             int count = i[1];
-
             behvCounts[index] = count;
         }
+
         return buildString(behvCounts);
 
     }
