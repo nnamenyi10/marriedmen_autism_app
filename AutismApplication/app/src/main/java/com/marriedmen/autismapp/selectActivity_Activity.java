@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +65,13 @@ public class selectActivity_Activity extends AppCompatActivity
             // Show the Up(Back) button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        /*DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int height = dm.heightPixels;
+        int width = dm.widthPixels;
+        ListView lv = (ListView) findViewById(R.id.behv_sel_frame);
+        RelativeLayout.LayoutParams mParam = new RelativeLayout((int)width, (int)(0.15*height));*/
 
         // get position from last activity
         Bundle bundle = getIntent().getExtras();

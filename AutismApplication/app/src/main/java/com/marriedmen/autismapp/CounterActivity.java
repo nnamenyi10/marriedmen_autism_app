@@ -1,9 +1,13 @@
 package com.marriedmen.autismapp;
 
+import android.content.Context;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,14 +20,20 @@ public class CounterActivity extends AppCompatActivity {
     Integer[] counts;
     DBHelper mDBHelper;
     Integer size;
+    Chronometer chrono;
+    private long elapsed;
+    private String clock = "00:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDBHelper = new DBHelper(this);
         setContentView(R.layout.activity_counter);
-        TextView text = (TextView) findViewById(R.id.textView4);
+        //TextView text = (TextView) findViewById(R.id.textView4);
         Bundle bundle = getIntent().getExtras();
+        //chrono = new Chronometer(this);
+        chrono = (Chronometer) findViewById(R.id.timer);
+        //init(this);
 
         behvs= bundle.getStringArray("behaviors");
         id = bundle.getString("ID");
@@ -79,9 +89,12 @@ public class CounterActivity extends AppCompatActivity {
             });
             layout.addView(buttons[i]);
         }
+
     }
 
     public void stop(View view) {
+        chrono.stop();
+        String time = chrono.toString();
         behvStringBuilder builder = new behvStringBuilder();
 
         Integer[][] info = new Integer[size][2];
@@ -96,4 +109,34 @@ public class CounterActivity extends AppCompatActivity {
         //mDBHelper.addLog(0,0,stringArray);
         finish();
     }
+
+    public void start(View view){
+        Log.d("test", "starting timer");
+        //chrono.start();
+        chrono.setBase(SystemClock.elapsedRealtime());
+        chrono.start();
+    }
+
+    public void pause (View view) {
+        Log.d("test", "Stopping timer");
+        //chrono.stop();
+        ((Chronometer) findViewById(R.id.timer)).stop();
+    }
+
+    /*private void init(Context c) {
+        chrono = new Chronometer(this);
+        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                Log.d("test", "get to tick?");
+                String MM = ((elapsed / 60) < 10 ? "0" : "") + (elapsed/60);
+                String SS = ((elapsed % 60) < 10 ? "0" : "") + (elapsed%60);
+                clock = MM + ":" + SS;
+                elapsed = (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+                chronometer.setText(clock);
+            }
+        });
+        chrono.setBase(SystemClock.elapsedRealtime());
+        chrono.start();
+    }*/
 }
