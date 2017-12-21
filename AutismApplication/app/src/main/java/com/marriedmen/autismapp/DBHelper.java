@@ -128,31 +128,31 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addLogTest(profileObj profile) {
-
+    public void addLog(Integer profile_id, Integer activity_id, String counterArray) {
+        /*
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
         String formattedDate = date.format(cal.getTime());
         String formattedTime = time.format(cal.getTime());
-
+        */
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
 
-        values.put(KEY_PROFILE_ID3, 0);
-        values.put(KEY_DATE, formattedDate);
+        values.put(KEY_PROFILE_ID3, profile_id);
+        //values.put(KEY_DATE, formattedDate);
 
         //values.put(KEY_START_TIME, formattedTime);
 
         //same start and end if fine for now
-        values.put(KEY_END_TIME, formattedTime);
+        //values.put(KEY_END_TIME, formattedTime);
         //this is saying the activity taking place has id 1, in this case its dinner (see init in mainactivity)
-        values.put(KEY_ACTIVITY_ID2, 1);
+        values.put(KEY_ACTIVITY_ID2, activity_id);
         //just adding a string for now
         //this is saying first behv happened once, second twice, ect... There are 4 total behvs currently
-        values.put(KEY_BEHV_COUNTER, "1,2,0,0");
+        values.put(KEY_BEHV_COUNTER, counterArray);
 
         db.insert(DATABASE_TABLE_LOGS, null, values);
         db.close();
@@ -164,6 +164,19 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_BEHVS, behv);
         db.insert(DATABASE_TABLE_BEHV, null, values);
         db.close();
+    }
+
+    public Integer getBehvId(String behv) {
+        //get behv id from bev name
+        SQLiteDatabase db = getReadableDatabase();
+
+        String qury = "SELECT "+ KEY_BEHV_ID +" FROM "+ DATABASE_TABLE_BEHV
+                +" WHERE "+ KEY_BEHVS+" = "+ '"'+behv+'"';
+
+        Cursor mCursor = db.rawQuery(qury, null);
+        mCursor.moveToFirst();
+        Integer id = mCursor.getInt(0);
+        return id;
     }
 
     public String[] getProfiles() {

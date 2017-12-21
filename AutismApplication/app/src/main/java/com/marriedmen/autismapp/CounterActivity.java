@@ -14,10 +14,13 @@ public class CounterActivity extends AppCompatActivity {
     Button[] buttons;
     TextView[] countViews;
     Integer[] counts;
-    
+    DBHelper mDBHelper;
+    Integer size;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDBHelper = new DBHelper(this);
         setContentView(R.layout.activity_counter);
         TextView text = (TextView) findViewById(R.id.textView4);
         Bundle bundle = getIntent().getExtras();
@@ -26,7 +29,7 @@ public class CounterActivity extends AppCompatActivity {
         id = bundle.getString("ID");
 
         //text.setText(behvs[1]);//Integer.toString();
-        int size = behvs.length;
+        size = behvs.length;
         //Button[]
                 buttons = new Button[size];
         //TextView[]
@@ -49,7 +52,7 @@ public class CounterActivity extends AppCompatActivity {
         for (int i = 0; i < behvs.length; i++){
 
             buttons[i] = new Button(this); //initialize the button here
-            buttons[i].setText(behvs[i]);
+            buttons[i].setText(behvs[i]+"  "+ counts[i]);
             buttons[i].setId(i+1);
 
             countViews[i] = new TextView(this);
@@ -57,7 +60,7 @@ public class CounterActivity extends AppCompatActivity {
             String count = Integer.toString(counts[i]);
 
             countViews[i].setId(i+1);
-            countViews[i].setText(count);
+            //countViews[i].setText(count);
             countViews[i].setTextSize(36);
             countViews[i].setLayoutParams(lp);
             countLayout.addView(countViews[i]);
@@ -69,12 +72,28 @@ public class CounterActivity extends AppCompatActivity {
                     View v = findViewById(R.id.myLayout);
 
                     counts[index]++;
-                    buttons[index].setText("test");
+                    buttons[index].setText(behvs[index] +"  "+ counts[index]);
                     v.invalidate();
                     view.invalidate();
                 }
             });
             layout.addView(buttons[i]);
         }
+    }
+
+    public void stop(View view) {
+        behvStringBuilder builder = new behvStringBuilder();
+
+        Integer[][] info = new Integer[size][2];
+
+        for(int i = 0; i < size; i++) {
+            info[i][0] = mDBHelper.getBehvId(behvs[i]);
+            info[i][1] = counts[i];
+        }
+
+        //String stringArray = builder.buildString(size, info);
+
+        //mDBHelper.addLog(0,0,stringArray);
+        finish();
     }
 }
