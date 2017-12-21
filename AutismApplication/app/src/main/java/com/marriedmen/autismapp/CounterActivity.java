@@ -1,6 +1,7 @@
 package com.marriedmen.autismapp;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CounterActivity extends AppCompatActivity {
     String[] behvs;
@@ -20,9 +22,14 @@ public class CounterActivity extends AppCompatActivity {
     Integer[] counts;
     DBHelper mDBHelper;
     Integer size;
-    Chronometer chrono;
-    private long elapsed;
-    private String clock = "00:00";
+    //Chronometer chrono;
+    //private long elapsed;
+    //private String clock = "00:00";
+    private String MM = "00";
+    private String SS = "00";
+    private boolean isRunning = false;
+    private int totalSec = 0;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +39,9 @@ public class CounterActivity extends AppCompatActivity {
         //TextView text = (TextView) findViewById(R.id.textView4);
         Bundle bundle = getIntent().getExtras();
         //chrono = new Chronometer(this);
-        chrono = (Chronometer) findViewById(R.id.timer);
+        //chrono = (Chronometer) findViewById(R.id.timer);
         //init(this);
+        tv = (TextView) findViewById(R.id.time_display);
 
         behvs= bundle.getStringArray("behaviors");
         id = bundle.getString("ID");
@@ -93,8 +101,10 @@ public class CounterActivity extends AppCompatActivity {
     }
 
     public void stop(View view) {
-        chrono.stop();
-        String time = chrono.toString();
+        isRunning = false;
+        //Toast.makeText(this, "Total time elapsed: " + totalSec + " seconds", Toast.LENGTH_SHORT).show();
+        //chrono.stop();
+        //String time = chrono.toString();
         behvStringBuilder builder = new behvStringBuilder();
 
         Integer[][] info = new Integer[size][2];
@@ -111,16 +121,19 @@ public class CounterActivity extends AppCompatActivity {
     }
 
     public void start(View view){
-        Log.d("test", "starting timer");
+        //Log.d("test", "starting timer");
+        isRunning = true;
+        new timer().execute();
         //chrono.start();
-        chrono.setBase(SystemClock.elapsedRealtime());
-        chrono.start();
+        //chrono.setBase(SystemClock.elapsedRealtime());
+        //chrono.start();
     }
 
     public void pause (View view) {
-        Log.d("test", "Stopping timer");
+        //Log.d("test", "Stopping timer");
+        isRunning = false;
         //chrono.stop();
-        ((Chronometer) findViewById(R.id.timer)).stop();
+        //((Chronometer) findViewById(R.id.timer)).stop();
     }
 
     /*private void init(Context c) {
@@ -139,4 +152,34 @@ public class CounterActivity extends AppCompatActivity {
         chrono.setBase(SystemClock.elapsedRealtime());
         chrono.start();
     }*/
+
+    private class timer extends AsyncTask<Void, String, String> {
+        @Override
+        protected String doInBackground(Void... nothing) {
+            while (isRunning) {
+                try {
+                    MM = ((totalSec / 60) < 10 ? "0" : "") + (totalSec / 60);
+                    SS = ((totalSec % 60) < 10 ? "0" : "") + (totalSec % 60);
+                    //TextView tv = (TextView)findViewById(R.id.time_display);
+                    //tv.setText(MM + ":" + SS);
+                    publishProgress(MM + ":" + SS);
+                    totalSec++;
+                    Thread.sleep(1000); // unusual time accounts for updating UI
+                    // @967mil
+                    // at 5 minutes, timer stayed accurate to the second on emulator
+                    // on Galaxy S8+ it is fast by 9 seconds at 5 minutes...
+
+                } catch (Exception e) {}
+            }
+            return MM + ":" + SS;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... time) {
+            //TextView tv = (TextView) findViewById(R.id.time_display);
+            tv.setText(time[0]);
+            //Log.d("test", MM + ":" + SS);
+    }
+
+    }
 }
